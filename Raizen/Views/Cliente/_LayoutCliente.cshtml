@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Raizen App</title>
+    <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <div class="container">
+        <header>
+            <!-- Aqui você pode colocar o cabeçalho do site, como uma barra de navegação -->
+            <nav class="navbar navbar-inverse">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Raizen App</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Clientes", "Index", "Cliente")</li>
+                        <!-- Adicione mais links conforme necessário -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <section class="row">
+            @RenderBody() <!-- Isso renderiza o conteúdo da View específica que está utilizando este Layout -->
+        </section>
+
+        <footer>
+            <!-- Aqui você pode adicionar o rodapé do site -->
+            <p>&copy; @DateTime.Now.Year - Raizen App</p>
+        </footer>
+    </div>
+
+    <script src="@Url.Content("~/Scripts/jquery-3.5.1.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
+
+    @RenderSection("JavaScript", required: false)
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

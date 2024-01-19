@@ -1,0 +1,237 @@
+﻿@model Raizen.Models.ClienteModel
+@{
+    ViewBag.Title = "Clientes";
+}
+
+<h2>Clientes</h2>
+
+@section JavaScript
+{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-3.5.1.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-3.5.1.min.js")" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/cliente.js")" type="text/javascript"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#novoCliente').click(function () {
+                $(':input', '.cliente-form')
+                    .not(':button, :submit, :reset, :hidden')
+                    .val('')
+                    .prop('checked', false)
+                    .prop('selected', false);
+
+                $('#CdCliente').val('0');
+            });
+
+            $('#DataNascimento').mask('00/00/0000', {
+                onComplete: function (cep) {
+                    // Callback após a conclusão da digitação da data
+                },
+                onKeyPress: function (cep, event, currentField, options) {
+                    var masks = ['00/00/0000', '00/00/00'];
+                    var mask = (currentField[0].value.length > 10) ? masks[1] : masks[0];
+                    $('#DataNascimento').mask(mask, options);
+                }
+            });
+
+            $('#limparFiltro').click(function () {
+                $('#nome').val('');
+                $('#email').val('');
+                $(this).closest('form').submit();
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        function visualizarCliente(id) {
+            var url = '@Url.Action("Visualizar", "Cliente")/' + id;
+
+            $.getJSON(url, function (cliente) {
+                $('#CdCliente').val(cliente.CdCliente);
+                $('#NmNome').val(cliente.NmNome);
+                $('#DsEmail').val(cliente.DsEmail);
+                $('#DataNascimento').val(formatarData(cliente.DataNascimento));
+                $('#CEP').val(cliente.CEP);
+            }).fail(function() {
+                alert("Erro ao carregar os dados do cliente.");
+            });
+        }
+
+        function excluirCliente(id) {
+            if (confirm("Tem certeza que deseja excluir este cliente?")) {
+                $.post('@Url.Action("Excluir", "Cliente")', { CdCliente: id }, function(data) {
+                    if (data.Codigo === 0) {
+                        window.location.reload();
+                    } else {
+                        alert("Erro ao excluir cliente: " + data.Erro);
+                    }
+                });
+            }
+        }
+
+        function formatarData(dataSerializada) {
+            var padrao = /Date\((\d+)(?:-\d+)?\)/;
+            var resultado = padrao.exec(dataSerializada);
+            if (resultado) {
+                var data = new Date(parseInt(resultado[1]));
+                return data.toLocaleDateString();
+            } else {
+                return dataSerializada;
+            }
+        }
+
+    </script>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval") <!-- Se isso já carregar o jQuery, remova a linha abaixo -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#DataNascimento').datetimepicker({
+                format: 'DD/MM/YYYY',
+                locale: 'pt-br',
+                showClose: true,
+                showClear: true,
+                showTodayButton: true,
+                widgetPositioning: {
+                    horizontal: 'auto',
+                    vertical: 'auto'
+                }
+            });
+
+            $('#cepField').blur(function () {
+                var cep = $(this).val().replace(/\D/g, '');
+                if (cep !== "") {
+                    var validacep = /^[0-9]{8}$/;
+                    if (validacep.test(cep)) {
+                        $.getJSON("https://viacep.com.br/ws/" + cep + "/json/", function (dados) {
+                            if (!("erro" in dados)) {
+                                // $("#logradouro").val(dados.logradouro);
+                            } else {
+                                alert("CEP não encontrado.");
+                            }
+                        }).fail(function () {
+                            alert("Erro ao buscar o CEP. Verifique sua conexão ou tente novamente mais tarde.");
+                        });
+                    } else {
+                        alert("Formato de CEP inválido.");
+                    }
+                }
+            });
+        });
+    </script>
+}
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+@Html.Partial("_ErrorMessages", Model)
+
+@using (Html.BeginForm("Salvar", "Cliente", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <!-- Campo oculto para CdCliente -->
+    @Html.HiddenFor(model => model.CdCliente, new { id = "CdCliente" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NmNome)
+        @Html.EditorFor(model => model.NmNome, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DsEmail)
+        @Html.EditorFor(model => model.DsEmail, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+
+    <div class="form-group" style="position: relative;">
+        @Html.LabelFor(model => model.DataNascimento)
+        @Html.TextBoxFor(model => model.DataNascimento, "{0:dd/MM/yyyy}", new { @class = "form-control date", @id = "DataNascimento", @placeholder = "dd/mm/yyyy" })
+        @Html.ValidationMessageFor(model => model.DataNascimento)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CEP)
+        @Html.EditorFor(model => model.CEP, new { htmlAttributes = new { @class = "form-control", @id = "cepField" } })
+    </div>
+
+    <!-- Botão de comando Salvar -->
+    <input type="submit" value="Salvar" class="btn btn-primary" />
+
+    <!-- Botão de comando Novo -->
+    <button type="button" class="btn btn-default" id="novoCliente">Novo</button>
+
+    <hr>
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Filtrar Clientes</h3>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("Index", "Cliente", FormMethod.Get, new { @class = "form-inline" }))
+        {
+            <div class="form-group">
+                <label for="nome" class="control-label">Nome:</label>
+                <input type="text" class="form-control input-sm" id="nome" name="nome" value="@Request.QueryString["nome"]" />
+            </div>
+            <div class="form-group">
+                <label for="email" class="control-label">E-mail:</label>
+                <input type="text" class="form-control input-sm" id="email" name="email" value="@Request.QueryString["email"]" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">Filtrar</button>
+            <button type="button" class="btn btn-default btn-sm" id="limparFiltro">Limpar</button>
+        }
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ações</th>
+            <th>NmNome</th>
+            <th>DsEmail</th>
+            <th>DataNascimento</th>
+            <th>CEP</th>
+            <th>DataCriacao</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cliente in Model.ListClientes)
+        {
+            <tr>
+                <td>
+                    <!-- Botões de ação -->
+                    <a href="javascript:void(0)" onclick="visualizarCliente(@cliente.CdCliente)" class="grid-comando visualizar" title="Visualizar">
+                        <img src="~/Content/Images/view.png" alt="Visualizar" />
+                    </a>
+                    <a href="javascript:void(0)" onclick="excluirCliente(@cliente.CdCliente)" class="grid-comando excluir" title="Excluir">
+                        <img src="~/Content/Images/delete.png" alt="Excluir" />
+                    </a>
+                </td>
+                <td>@cliente.NmNome</td>
+                <td>@cliente.DsEmail</td>
+                <td>@cliente.DataNascimento.ToString("dd/MM/yyyy")</td>
+                <td>@cliente.CEP</td>
+                <td>@cliente.DataCriacao.ToString("dd/MM/yyyy")</td>
+            </tr>
+        }
+    </tbody>
+</table>

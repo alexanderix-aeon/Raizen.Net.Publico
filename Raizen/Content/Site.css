@@ -1,0 +1,69 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* Estilos para os botões de comando no grid */
+.grid-comando {
+    display: inline-block; /* Exibe os elementos lado a lado */
+    margin-right: 10px; /* Espaçamento à direita de cada botão */
+    padding: 4px 8px; /* Espaçamento interno para dar forma ao botão */
+    border: 1px solid #ddd; /* Borda para o efeito de botão */
+    border-radius: 4px; /* Bordas arredondadas */
+    text-decoration: none; /* Remove o sublinhado dos links */
+    background-color: #f7f7f7; /* Cor de fundo para o botão */
+    box-shadow: 1px 1px 2px #bbb; /* Sombra para um efeito 3D leve */
+}
+
+.grid-comando img {
+    height: 14px; /* Altura da imagem */
+    width: auto; /* Largura automática para manter a proporção da imagem */
+    vertical-align: middle; /* Alinha verticalmente a imagem com o texto se houver */
+}
+
+/* Adicione :hover para um feedback visual quando o usuário passa o mouse sobre o botão */
+.grid-comando:hover {
+    background-color: #e7e7e7; /* Cor de fundo um pouco mais escura quando hover */
+    border-color: #ccc; /* Borda um pouco mais escura quando hover */
+}
+
+/* Pode adicionar cores específicas para cada ação, se desejar */
+.visualizar:hover {
+    background-color: #d9edf7;
+}
+
+.excluir:hover {
+    background-color: #f2dede;
+}
+
+.search-filters {
+    margin-bottom: 20px;
+}
+
+.search-filters label {
+    margin-right: 5px;
+}
+
+.search-filters input[type="text"] {
+    margin-right: 10px;
+}

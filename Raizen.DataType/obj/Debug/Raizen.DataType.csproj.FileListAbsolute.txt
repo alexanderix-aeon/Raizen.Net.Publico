@@ -1,0 +1,5 @@
+C:\_bitbucket\RAIZEN\Raizen.DataType\bin\Debug\Raizen.DataType.dll
+C:\_bitbucket\RAIZEN\Raizen.DataType\bin\Debug\Raizen.DataType.pdb
+C:\_bitbucket\RAIZEN\Raizen.DataType\obj\Debug\Raizen.DataType.csproj.CoreCompileInputs.cache
+C:\_bitbucket\RAIZEN\Raizen.DataType\obj\Debug\Raizen.DataType.dll
+C:\_bitbucket\RAIZEN\Raizen.DataType\obj\Debug\Raizen.DataType.pdb

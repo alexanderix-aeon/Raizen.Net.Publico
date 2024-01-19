@@ -1,0 +1,9 @@
+C:\_bitbucket\RAIZEN\Raizen.Repository\obj\Debug\Raizen.Repository.csproj.AssemblyReference.cache
+C:\_bitbucket\RAIZEN\Raizen.Repository\obj\Debug\Raizen.Repository.csproj.CoreCompileInputs.cache
+C:\_bitbucket\RAIZEN\Raizen.Repository\bin\Debug\Raizen.Repository.dll
+C:\_bitbucket\RAIZEN\Raizen.Repository\bin\Debug\Raizen.Repository.pdb
+C:\_bitbucket\RAIZEN\Raizen.Repository\bin\Debug\Raizen.DataType.dll
+C:\_bitbucket\RAIZEN\Raizen.Repository\bin\Debug\Raizen.DataType.pdb
+C:\_bitbucket\RAIZEN\Raizen.Repository\obj\Debug\Raizen.Repository.csproj.CopyComplete
+C:\_bitbucket\RAIZEN\Raizen.Repository\obj\Debug\Raizen.Repository.dll
+C:\_bitbucket\RAIZEN\Raizen.Repository\obj\Debug\Raizen.Repository.pdb

@@ -1,0 +1,16 @@
+﻿@model Raizen.Models.ClienteModel
+
+@{
+    ViewBag.Title = "_ErrorMessages";
+}
+
+@if (Model != null && Model.Erros != null && Model.Erros.Any())
+{
+    <div class="alert alert-danger" role="alert">
+        <strong>Erro!</strong>
+        @foreach (var erro in Model.Erros)
+        {
+            <p>@erro</p>
+        }
+    </div>
+}
